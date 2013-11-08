@@ -17,6 +17,8 @@ package org.oscim.backend;
 
 public class GLAdapter {
 
+	public static boolean GDX_NO_LINUX_QUIRKS;
+
 	public static GL20 g;
 
 	public static boolean GDX_DESKTOP_QUIRKS;

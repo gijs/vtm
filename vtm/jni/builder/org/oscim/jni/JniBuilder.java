@@ -69,10 +69,19 @@ public class JniBuilder {
 		// ios.cFlags += cflags;
 		// ios.cppFlags += cflags;
 
+		 BuildTarget mac = BuildTarget.newDefaultTarget(TargetOs.MacOsX,
+				 false);
+				 mac.headerDirs = headers;
+				 mac.cIncludes = sources;
+				 mac.cFlags += cflags;
+				 mac.cppFlags += cflags;
+				 mac.linkerFlags += " -framework CoreServices -framework Carbon";
+				 
 		//new NativeCodeGenerator().generate();
 		new AntScriptGenerator().generate(new BuildConfig("vtm-jni"),
 				//win32home, win32, win64, lin32,
-				lin64, android);
+				//lin64, android
+				mac);
 //		BuildExecutor.executeAnt("jni/build-windows32home.xml", "-v clean");
 //		BuildExecutor.executeAnt("jni/build-windows32home.xml", "-v");
 //		BuildExecutor.executeAnt("jni/build.xml", "pack-natives -v");

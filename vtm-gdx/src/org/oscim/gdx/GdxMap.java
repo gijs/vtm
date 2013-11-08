@@ -1,6 +1,7 @@
 package org.oscim.gdx;
 
 import org.oscim.backend.AssetAdapter;
+import org.oscim.backend.GLAdapter;
 import org.oscim.backend.Log;
 import org.oscim.core.MapPosition;
 import org.oscim.core.Tile;
@@ -170,7 +171,11 @@ public class GdxMap implements ApplicationListener {
 		if (mRenderRequest) {
 			mRenderRequest = false;
 			mMapRenderer.onDrawFrame();
+		} else if (GLAdapter.GDX_NO_LINUX_QUIRKS){
+			mRenderRequest = false;
+			mMapRenderer.onDrawFrame();
 		}
+			
 		// Gdx.gl20.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
 		// Gdx.gl20.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0);
 

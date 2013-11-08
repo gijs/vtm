@@ -165,6 +165,34 @@ public class GlUtils {
 		                   GL20.GL_REPEAT, GL20.GL_REPEAT);
 	}
 
+//	/**
+//	 * @param shaderType
+//	 *            shader type
+//	 * @param source
+//	 *            shader code
+//	 * @return gl identifier
+//	 */
+//	public static int loadShader(int shaderType, String source) {
+//
+//		int shader = GL.glCreateShader(shaderType);
+//		if (shader != 0) {
+//			GL.glShaderSource(shader, source);
+//			GL.glCompileShader(shader);
+//			IntBuffer compiled = GLRenderer.getIntBuffer(1);
+//
+//			GL.glGetShaderiv(shader, GL20.GL_COMPILE_STATUS, compiled);
+//			compiled.position(0);
+//			if (compiled.get() == 0) {
+//				Log.e(TAG, "Could not compile shader " + shaderType + ":");
+//				Log.e(TAG, GL.glGetShaderInfoLog(shader));
+//				GL.glDeleteShader(shader);
+//				shader = 0;
+//			}
+//		}
+//		return shader;
+//	}
+
+	
 	/**
 	 * @param shaderType
 	 *            shader type
@@ -173,6 +201,18 @@ public class GlUtils {
 	 * @return gl identifier
 	 */
 	public static int loadShader(int shaderType, String source) {
+
+		if (GLAdapter.GDX_DESKTOP_QUIRKS) {
+			// Strip precision modifer
+			int start = source.indexOf("precision");
+			if (start >= 0) {
+				int end = source.indexOf(';', start) + 1;
+				if (start > 0)
+					source = source.substring(0, start) + source.substring(end);
+				else
+					source = source.substring(end);
+			}
+		}
 
 		int shader = GL.glCreateShader(shaderType);
 		if (shader != 0) {
